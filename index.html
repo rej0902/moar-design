@@ -197,7 +197,7 @@
 
             <div class="grid md:grid-cols-2 gap-12 items-center mb-20">
                 <div class="reveal">
-                    <img src="public/assets/images/moar_logo_sign.jpg" alt="MOAR DESIGN Philosophy" class="w-full rounded-lg shadow-2xl">
+                    <img src="image/moar_logo.png" alt="MOAR DESIGN Philosophy" class="w-full rounded-lg shadow-2xl">
                 </div>
 
                 <div class="space-y-6 reveal">
@@ -229,21 +229,6 @@
                 </div>
             </div>
 
-            <!-- 동적 통계 섹션 -->
-            <div class="grid grid-cols-3 gap-6 mt-16 reveal" id="stats-section">
-                <div class="text-center p-6 bg-gray-50 rounded-lg">
-                    <div class="text-3xl md:text-4xl font-bold mb-2" id="stat-portfolio">-</div>
-                    <div class="text-gray-600 text-sm md:text-base">포트폴리오</div>
-                </div>
-                <div class="text-center p-6 bg-gray-50 rounded-lg">
-                    <div class="text-3xl md:text-4xl font-bold mb-2" id="stat-photos">-</div>
-                    <div class="text-gray-600 text-sm md:text-base">시공 사진</div>
-                </div>
-                <div class="text-center p-6 bg-gray-50 rounded-lg">
-                    <div class="text-3xl md:text-4xl font-bold mb-2" id="stat-reviews">-</div>
-                    <div class="text-gray-600 text-sm md:text-base">고객 리뷰</div>
-                </div>
-            </div>
         </div>
     </section>
 
@@ -333,7 +318,11 @@
                 </div>
             </div>
 
-            <div class="grid md:grid-cols-2 gap-8 reveal">
+            <div class="reveal">
+                <img src="image/진행과정.png" alt="모아르 디자인 진행 과정 - 네이버 밴드 가이드, 시스템 프로세스, 실제 시공 후기" class="w-full mx-auto rounded-lg shadow-xl">
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8 mt-16 reveal">
                 <div class="bg-black rounded-lg overflow-hidden shadow-2xl img-hover">
                     <img src="image/1차도면.jpg" alt="Design Process Details" class="w-full h-full object-cover">
                 </div>
@@ -341,10 +330,6 @@
                 <div class="bg-white rounded-lg overflow-hidden shadow-2xl img-hover">
                     <img src="image/3d투시도.jpg" alt="3D Visualization" class="w-full h-full object-cover">
                 </div>
-            </div>
-
-            <div class="mt-16 reveal">
-                <img src="image/인테리어 진행절차.jpg" alt="Interior Process Flow" class="w-full max-w-4xl mx-auto rounded-lg shadow-xl">
             </div>
         </div>
     </section>
@@ -543,7 +528,7 @@
         <div class="container mx-auto max-w-6xl">
             <div class="grid md:grid-cols-3 gap-8 mb-8">
                 <div>
-                    <img src="public/assets/images/moar_logo_text.png" alt="MOAR DESIGN" class="w-48 mb-4 brightness-0 invert">
+                    <img src="image/moar_logo.png" alt="MOAR DESIGN" class="h-12 mb-4">
                     <p class="text-gray-400 text-sm">
                         감성을 품은 하이엔드<br>
                         모아르 디자인입니다
@@ -682,14 +667,6 @@
             return num.toLocaleString('ko-KR');
         }
 
-        // ============================================
-        // 통계 렌더링
-        // ============================================
-        function renderStats(data) {
-            document.getElementById('stat-portfolio').textContent = data.portfolioCount || '-';
-            document.getElementById('stat-photos').textContent = data.photoCount || '-';
-            document.getElementById('stat-reviews').textContent = data.reviewCount || '-';
-        }
 
         // ============================================
         // 포트폴리오 카드 HTML 생성
@@ -823,7 +800,6 @@
                 if (summaryResponse.ok) {
                     const summaryData = await summaryResponse.json();
                     console.log('✅ Summary 데이터 로드 성공');
-                    renderStats(summaryData);
                     
                     if (summaryData.reviews && summaryData.reviews.length > 0) {
                         renderReviews(summaryData.reviews);
