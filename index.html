@@ -150,6 +150,27 @@
             opacity: 1;
             visibility: visible;
         }
+
+        /* Typewriter Animation */
+        .typewriter {
+            display: inline;
+        }
+
+        .typewriter-cursor {
+            display: inline-block;
+            animation: blink 0.8s infinite;
+            font-weight: 300;
+            margin-left: 4px;
+        }
+
+        .typewriter-cursor.hidden {
+            display: none;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
     </style>
 </head>
 <body class="font-sans antialiased bg-white text-gray-900 overflow-x-hidden">
@@ -164,15 +185,15 @@
 
         <!-- Hero Content -->
         <div class="relative z-10 text-center px-4">
-            <h1 class="text-3xl md:text-5xl lg:text-6xl text-white mb-6 tracking-wide opacity-0 animate-fade-in-up delay-500" style="font-family: 'Noto Serif KR', Georgia, serif; font-weight: 300;">
-                감성을 품은 하이엔드
+            <h1 class="text-4xl md:text-6xl lg:text-7xl text-white mb-6 tracking-wide" style="font-family: 'Noto Serif KR', Georgia, serif; font-weight: 500;">
+                <span id="typewriter-1" class="typewriter"></span><span id="cursor-1" class="typewriter-cursor">|</span>
             </h1>
 
-            <p class="text-xl md:text-2xl lg:text-3xl text-white/90 mb-12 opacity-0 animate-fade-in-up delay-700" style="font-family: 'Noto Serif KR', Georgia, serif; font-weight: 300;">
-                모아르 디자인입니다
+            <p class="text-2xl md:text-3xl lg:text-4xl text-white/90 mb-12" style="font-family: 'Noto Serif KR', Georgia, serif; font-weight: 500;">
+                <span id="typewriter-2" class="typewriter"></span><span id="cursor-2" class="typewriter-cursor hidden">|</span>
             </p>
 
-            <div class="inline-block px-6 py-3 border-2 border-white/50 text-white text-sm tracking-widest opacity-0 animate-fade-in delay-1000">
+            <div id="hero-badge" class="inline-block px-6 py-3 border-2 border-white/50 text-white text-sm tracking-widest opacity-0">
                 오늘의집 스탠다드 업체
             </div>
         </div>
@@ -575,6 +596,45 @@
     <script>
         // Initialize Lucide icons
         lucide.createIcons();
+
+        // ============================================
+        // Typewriter Animation
+        // ============================================
+        const typewriterTexts = [
+            { element: 'typewriter-1', text: '감성을 품은 하이엔드', delay: 500 },
+            { element: 'typewriter-2', text: '모아르 디자인입니다', delay: 0 }
+        ];
+
+        async function typeWriter(elementId, text, speed = 80) {
+            const element = document.getElementById(elementId);
+            if (!element) return;
+            
+            for (let i = 0; i < text.length; i++) {
+                element.textContent += text.charAt(i);
+                await new Promise(resolve => setTimeout(resolve, speed));
+            }
+        }
+
+        async function startTypewriterAnimation() {
+            // 첫 번째 줄 타이핑
+            await new Promise(resolve => setTimeout(resolve, 800)); // 초기 딜레이
+            await typeWriter('typewriter-1', '감성을 품은 하이엔드', 100);
+            
+            // 커서를 첫 번째 줄에서 두 번째 줄로 이동
+            document.getElementById('cursor-1').classList.add('hidden');
+            document.getElementById('cursor-2').classList.remove('hidden');
+            
+            // 잠시 대기 후 두 번째 줄 타이핑
+            await new Promise(resolve => setTimeout(resolve, 300));
+            await typeWriter('typewriter-2', '모아르 디자인입니다.', 100);
+            
+            // 배지 페이드인 (커서는 계속 깜빡임)
+            await new Promise(resolve => setTimeout(resolve, 500));
+            document.getElementById('hero-badge').style.animation = 'fadeIn 1s ease forwards';
+        }
+
+        // 페이지 로드 후 타이핑 애니메이션 시작
+        window.addEventListener('load', startTypewriterAnimation);
 
         // YouTube Background Player
         const tag = document.createElement('script');
