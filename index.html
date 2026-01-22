@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MOAR DESIGN | 감성을 품은 하이엔드 인테리어</title>
+    <meta name="description" content="모아르 디자인 - 감성을 품은 하이엔드 인테리어. 오늘의집 스탠다드 업체.">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Pretendard', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+                    },
+                },
+            },
+        }
+    </script>
+
+    <!-- Pretendard Font -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        /* Video Background */
+        .video-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 300vw;
+            height: 300vh;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+        }
+
+        .video-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.6);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+
+        .animate-fade-in-up {
+            animation: fadeInUp 1s ease forwards;
+        }
+
+        .animate-fade-in {
+            animation: fadeIn 1s ease forwards;
+        }
+
+        .delay-300 { animation-delay: 0.3s; }
+        .delay-500 { animation-delay: 0.5s; }
+        .delay-700 { animation-delay: 0.7s; }
+        .delay-1000 { animation-delay: 1s; }
+        .delay-1300 { animation-delay: 1.3s; }
+        .delay-1500 { animation-delay: 1.5s; }
+
+        /* Scroll Animation */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Card Hover */
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+
+        .card-hover:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Image Hover */
+        .img-hover {
+            overflow: hidden;
+        }
+
+        .img-hover img {
+            transition: transform 0.5s ease;
+        }
+
+        .img-hover:hover img {
+            transform: scale(1.1);
+        }
+
+        /* Scroll to top */
+        .scroll-to-top {
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .scroll-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+    </style>
+</head>
+<body class="font-sans antialiased bg-white text-gray-900 overflow-x-hidden">
+
+    <!-- Hero Section with Video Background -->
+    <section id="hero" class="relative h-screen flex items-center justify-center overflow-hidden">
+        <!-- Video Background -->
+        <div class="video-container">
+            <div id="youtube-player"></div>
+            <div class="video-overlay"></div>
+        </div>
+
+        <!-- Hero Content -->
+        <div class="relative z-10 text-center px-4">
+            <div class="opacity-0 animate-fade-in-up delay-500">
+                <img src="public/assets/images/moar_logo_sign.jpg" alt="MOAR DESIGN" class="w-64 md:w-96 mx-auto mb-8" style="filter: invert(1); mix-blend-mode: screen;">
+            </div>
+
+            <h1 class="text-3xl md:text-5xl lg:text-6xl text-white mb-6 tracking-wide opacity-0 animate-fade-in-up delay-700">
+                감성을 품은 하이엔드
+            </h1>
+
+            <p class="text-xl md:text-2xl lg:text-3xl text-white/90 mb-12 opacity-0 animate-fade-in-up delay-1000">
+                모아르 디자인입니다
+            </p>
+
+            <div class="inline-block px-6 py-3 border-2 border-white/50 text-white text-sm tracking-widest opacity-0 animate-fade-in delay-1300">
+                오늘의집 스탠다드 업체
+            </div>
+        </div>
+
+        <!-- Scroll Indicator -->
+        <button onclick="scrollToSection('about')" class="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 text-white cursor-pointer opacity-0 animate-fade-in delay-1500">
+            <i data-lucide="chevron-down" class="w-10 h-10" style="animation: bounce 2s infinite;"></i>
+        </button>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-24 px-4 bg-white">
+        <div class="container mx-auto max-w-6xl">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-4xl md:text-5xl lg:text-6xl mb-6 tracking-tight">
+                    MOAR DESIGN
+                </h2>
+                <p class="text-xl md:text-2xl text-gray-600 mb-4">
+                    감성을 품은 하이엔드, 모아르 디자인입니다
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-12 items-center mb-20">
+                <div class="reveal">
+                    <img src="public/assets/images/moar_logo_sign.jpg" alt="MOAR DESIGN Philosophy" class="w-full rounded-lg shadow-2xl">
+                </div>
+
+                <div class="space-y-6 reveal">
+                    <div>
+                        <h3 class="text-2xl md:text-3xl mb-4">
+                            각자의 취향이 모여 예술이 되는 공간
+                        </h3>
+                        <p class="text-gray-700 leading-relaxed text-lg">
+                            모아르디자인의 로고는 핵심이 되는 알파벳 'M'을 중심으로
+                            직선과 곡선이 조화롭게 어우러져 있습니다.
+                        </p>
+                    </div>
+
+                    <div>
+                        <p class="text-gray-700 leading-relaxed text-lg">
+                            이 조형적 표현은 서로 다른 생각과 스타일이 모여
+                            고객이 원하는 새로운 인테리어 디자인을 구현한다는
+                            브랜드의 철학을 상징합니다.
+                        </p>
+                    </div>
+
+                    <div class="border-l-4 border-black pl-6 py-4">
+                        <p class="text-gray-700 leading-relaxed text-lg italic">
+                            로고의 텍스트는 간결하면서도
+                            세련된 서체로 디자인되었습니다.
+                            곡선과 직선의 조화로운 균형은
+                            부드럽고 친근한 이미지를 전달하며
+                            브랜드가 추구하는 따뜻하고 진정성 있는 감성을
+                            자연스럽게 표현합니다.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mt-16 reveal">
+                <div class="text-center p-6 bg-gray-50 rounded-lg">
+                    <div class="text-3xl md:text-4xl font-bold mb-2">200+</div>
+                    <div class="text-gray-600 text-sm md:text-base">완료 프로젝트</div>
+                </div>
+                <div class="text-center p-6 bg-gray-50 rounded-lg">
+                    <div class="text-3xl md:text-4xl font-bold mb-2">10+</div>
+                    <div class="text-gray-600 text-sm md:text-base">년의 경험</div>
+                </div>
+                <div class="text-center p-6 bg-gray-50 rounded-lg">
+                    <div class="text-3xl md:text-4xl font-bold mb-2">98%</div>
+                    <div class="text-gray-600 text-sm md:text-base">고객 만족도</div>
+                </div>
+                <div class="text-center p-6 bg-gray-50 rounded-lg">
+                    <div class="text-3xl md:text-4xl font-bold mb-2">24/7</div>
+                    <div class="text-gray-600 text-sm md:text-base">고객 지원</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-24 px-4 bg-gray-50">
+        <div class="container mx-auto max-w-7xl">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-4xl md:text-5xl lg:text-6xl mb-6">
+                    WHY MOAR DESIGN
+                </h2>
+                <p class="text-xl md:text-2xl text-gray-600">
+                    모아르 디자인을 선택해야 하는 이유
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="bg-white p-8 rounded-lg shadow-lg card-hover text-center reveal">
+                    <div class="inline-flex items-center justify-center w-16 h-16 bg-black text-white rounded-full mb-6">
+                        <i data-lucide="award" class="w-8 h-8"></i>
+                    </div>
+                    <h3 class="text-xl md:text-2xl font-medium mb-4">오늘의집 스탠다드</h3>
+                    <p class="text-gray-600 leading-relaxed">검증된 품질과 서비스로 오늘의집 스탠다드 업체로 선정되었습니다</p>
+                </div>
+
+                <div class="bg-white p-8 rounded-lg shadow-lg card-hover text-center reveal">
+                    <div class="inline-flex items-center justify-center w-16 h-16 bg-black text-white rounded-full mb-6">
+                        <i data-lucide="users" class="w-8 h-8"></i>
+                    </div>
+                    <h3 class="text-xl md:text-2xl font-medium mb-4">전문 시공팀</h3>
+                    <p class="text-gray-600 leading-relaxed">10년 이상의 경험을 가진 전문 시공팀이 직접 시공합니다</p>
+                </div>
+
+                <div class="bg-white p-8 rounded-lg shadow-lg card-hover text-center reveal">
+                    <div class="inline-flex items-center justify-center w-16 h-16 bg-black text-white rounded-full mb-6">
+                        <i data-lucide="clock" class="w-8 h-8"></i>
+                    </div>
+                    <h3 class="text-xl md:text-2xl font-medium mb-4">정확한 일정관리</h3>
+                    <p class="text-gray-600 leading-relaxed">체계적인 공정 관리로 약속된 일정을 정확하게 지킵니다</p>
+                </div>
+
+                <div class="bg-white p-8 rounded-lg shadow-lg card-hover text-center reveal">
+                    <div class="inline-flex items-center justify-center w-16 h-16 bg-black text-white rounded-full mb-6">
+                        <i data-lucide="shield-check" class="w-8 h-8"></i>
+                    </div>
+                    <h3 class="text-xl md:text-2xl font-medium mb-4">완벽한 A/S</h3>
+                    <p class="text-gray-600 leading-relaxed">시공 후에도 지속적인 관리와 완벽한 A/S를 제공합니다</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Process Section -->
+    <section id="process" class="py-24 px-4 bg-gradient-to-b from-gray-50 to-white">
+        <div class="container mx-auto max-w-7xl">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-4xl md:text-5xl lg:text-6xl mb-6">
+                    DESIGN PROCESS
+                </h2>
+                <p class="text-xl md:text-2xl text-gray-600">
+                    체계적인 프로세스로 완벽한 공간을 완성합니다
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8 mb-20">
+                <div class="bg-white p-8 rounded-lg shadow-lg card-hover reveal">
+                    <div class="text-sm text-gray-500 mb-2 tracking-wider">Step 1</div>
+                    <h3 class="text-2xl md:text-3xl font-medium mb-4">미팅</h3>
+                    <p class="text-gray-600 leading-relaxed">고객님의 요구 사항과 예산을 고려한 맞춤 컨설팅</p>
+                </div>
+
+                <div class="bg-white p-8 rounded-lg shadow-lg card-hover reveal">
+                    <div class="text-sm text-gray-500 mb-2 tracking-wider">Step 2</div>
+                    <h3 class="text-2xl md:text-3xl font-medium mb-4">가견적 및 현장방문</h3>
+                    <p class="text-gray-600 leading-relaxed">프로젝트에 필요한 개략적 견적 확인 후 현장 실측</p>
+                </div>
+
+                <div class="bg-white p-8 rounded-lg shadow-lg card-hover reveal">
+                    <div class="text-sm text-gray-500 mb-2 tracking-wider">Step 3</div>
+                    <h3 class="text-2xl md:text-3xl font-medium mb-4">디자인 및 기획</h3>
+                    <p class="text-gray-600 leading-relaxed">디자인 실측 파일들로 디자인요소, 3D작업 진행</p>
+                </div>
+
+                <div class="bg-white p-8 rounded-lg shadow-lg card-hover reveal">
+                    <div class="text-sm text-gray-500 mb-2 tracking-wider">Step 4</div>
+                    <h3 class="text-2xl md:text-3xl font-medium mb-4">계약 및 시공</h3>
+                    <p class="text-gray-600 leading-relaxed">최종 계약 후 공정관리와 변수에 대한 지속적인 소통</p>
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8 reveal">
+                <div class="bg-black rounded-lg overflow-hidden shadow-2xl img-hover">
+                    <img src="image/1차도면.jpg" alt="Design Process Details" class="w-full h-full object-cover">
+                </div>
+
+                <div class="bg-white rounded-lg overflow-hidden shadow-2xl img-hover">
+                    <img src="image/3d투시도.jpg" alt="3D Visualization" class="w-full h-full object-cover">
+                </div>
+            </div>
+
+            <div class="mt-16 reveal">
+                <img src="image/인테리어 진행절차.jpg" alt="Interior Process Flow" class="w-full max-w-4xl mx-auto rounded-lg shadow-xl">
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section id="portfolio" class="py-24 px-4 bg-black text-white">
+        <div class="container mx-auto max-w-7xl">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-4xl md:text-5xl lg:text-6xl mb-6">
+                    PORTFOLIO
+                </h2>
+                <p class="text-xl md:text-2xl text-gray-400">
+                    완성도 높은 공간, 만족도 높은 고객
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="group relative overflow-hidden rounded-lg aspect-[4/3] cursor-pointer reveal img-hover">
+                    <img src="image/3d투시도.jpg" alt="모던 아파트 인테리어" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <div class="absolute bottom-0 left-0 right-0 p-6">
+                            <div class="text-sm text-gray-300 mb-2">아파트</div>
+                            <h3 class="text-2xl font-medium mb-2">모던 아파트 인테리어</h3>
+                            <p class="text-gray-300 text-sm">세련된 색감과 고급스러운 마감재로 완성한 34평 아파트</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="group relative overflow-hidden rounded-lg aspect-[4/3] cursor-pointer reveal img-hover">
+                    <img src="image/1차도면.jpg" alt="2D 도면 설계" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <div class="absolute bottom-0 left-0 right-0 p-6">
+                            <div class="text-sm text-gray-300 mb-2">설계</div>
+                            <h3 class="text-2xl font-medium mb-2">정밀 도면 설계</h3>
+                            <p class="text-gray-300 text-sm">정확한 실측을 바탕으로 한 2D 도면 작업</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="group relative overflow-hidden rounded-lg aspect-[4/3] cursor-pointer reveal img-hover">
+                    <img src="image/공정표.png" alt="공정 관리" class="w-full h-full object-cover bg-white">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <div class="absolute bottom-0 left-0 right-0 p-6">
+                            <div class="text-sm text-gray-300 mb-2">프로세스</div>
+                            <h3 class="text-2xl font-medium mb-2">체계적인 공정 관리</h3>
+                            <p class="text-gray-300 text-sm">일정, 자재발주, 협력업체 스케줄까지 체계적으로 관리</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-12 reveal">
+                <a href="https://ohou.se/experts/myhome/23827218" target="_blank" class="inline-flex items-center gap-2 px-8 py-4 bg-white text-black font-medium rounded-full hover:bg-gray-100 transition-colors">
+                    더 많은 포트폴리오 보기
+                    <i data-lucide="external-link" class="w-5 h-5"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-24 px-4 bg-white">
+        <div class="container mx-auto max-w-6xl">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-4xl md:text-5xl lg:text-6xl mb-6">
+                    CONTACT US
+                </h2>
+                <p class="text-xl md:text-2xl text-gray-600">
+                    언제든지 편하게 문의해 주세요
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-12 mb-16">
+                <div class="space-y-8 reveal">
+                    <div>
+                        <h3 class="text-2xl md:text-3xl font-medium mb-6">연락처 정보</h3>
+
+                        <div class="space-y-4">
+                            <a href="tel:0507-1383-2168" class="flex items-start gap-4 group">
+                                <i data-lucide="phone" class="w-6 h-6 mt-1 text-gray-600"></i>
+                                <div>
+                                    <div class="text-sm text-gray-500 mb-1">전화</div>
+                                    <span class="text-xl group-hover:text-gray-600 transition-colors">0507-1383-2168</span>
+                                </div>
+                            </a>
+
+                            <a href="mailto:moar_design@naver.com" class="flex items-start gap-4 group">
+                                <i data-lucide="mail" class="w-6 h-6 mt-1 text-gray-600"></i>
+                                <div>
+                                    <div class="text-sm text-gray-500 mb-1">이메일</div>
+                                    <span class="text-xl group-hover:text-gray-600 transition-colors">moar_design@naver.com</span>
+                                </div>
+                            </a>
+
+                            <div class="flex items-start gap-4">
+                                <i data-lucide="map-pin" class="w-6 h-6 mt-1 text-gray-600"></i>
+                                <div>
+                                    <div class="text-sm text-gray-500 mb-1">주소</div>
+                                    <div class="text-lg">
+                                        경기 성남시 분당구 황새울로 200번길<br>
+                                        34-6층 604호 모아르 디자인
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="reveal">
+                    <h3 class="text-2xl md:text-3xl font-medium mb-6">소셜 미디어</h3>
+
+                    <div class="space-y-4">
+                        <a href="https://ohou.se/experts/myhome/23827218" target="_blank" class="flex items-center gap-4 p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors group">
+                            <div class="flex items-center justify-center w-12 h-12 bg-black text-white rounded-lg group-hover:scale-110 transition-transform">
+                                <span class="text-2xl">🏠</span>
+                            </div>
+                            <span class="text-lg">오늘의집</span>
+                        </a>
+
+                        <a href="https://www.instagram.com/moar_design_/" target="_blank" class="flex items-center gap-4 p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors group">
+                            <div class="flex items-center justify-center w-12 h-12 bg-black text-white rounded-lg group-hover:scale-110 transition-transform">
+                                <i data-lucide="instagram" class="w-6 h-6"></i>
+                            </div>
+                            <span class="text-lg">Instagram</span>
+                        </a>
+
+                        <a href="https://blog.naver.com/moar_design" target="_blank" class="flex items-center gap-4 p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors group">
+                            <div class="flex items-center justify-center w-12 h-12 bg-black text-white rounded-lg group-hover:scale-110 transition-transform">
+                                <span class="text-xl font-bold">N</span>
+                            </div>
+                            <span class="text-lg">네이버 블로그</span>
+                        </a>
+
+                        <a href="https://www.youtube.com/channel/UC6TUwkMlkTCU-mACQG6NfiA" target="_blank" class="flex items-center gap-4 p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors group">
+                            <div class="flex items-center justify-center w-12 h-12 bg-black text-white rounded-lg group-hover:scale-110 transition-transform">
+                                <i data-lucide="youtube" class="w-6 h-6"></i>
+                            </div>
+                            <span class="text-lg">YouTube</span>
+                        </a>
+
+                        <a href="https://map.naver.com/p/entry/place/2046266274" target="_blank" class="flex items-center gap-4 p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors group">
+                            <div class="flex items-center justify-center w-12 h-12 bg-black text-white rounded-lg group-hover:scale-110 transition-transform">
+                                <i data-lucide="map-pin" class="w-6 h-6"></i>
+                            </div>
+                            <span class="text-lg">네이버 플레이스</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center p-8 bg-gray-50 rounded-lg reveal">
+                <p class="text-lg text-gray-700 mb-4">
+                    <strong>영업시간</strong>
+                </p>
+                <p class="text-gray-600">
+                    평일: 09:00 - 18:00<br>
+                    주말 및 공휴일: 예약제 운영
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black text-white py-12 px-4">
+        <div class="container mx-auto max-w-6xl">
+            <div class="grid md:grid-cols-3 gap-8 mb-8">
+                <div>
+                    <img src="public/assets/images/moar_logo_text.png" alt="MOAR DESIGN" class="w-48 mb-4 brightness-0 invert">
+                    <p class="text-gray-400 text-sm">
+                        감성을 품은 하이엔드<br>
+                        모아르 디자인입니다
+                    </p>
+                </div>
+
+                <div>
+                    <h4 class="text-lg font-medium mb-4">연락처</h4>
+                    <div class="space-y-2 text-sm text-gray-400">
+                        <p>전화: 0507-1383-2168</p>
+                        <p>이메일: moar_design@naver.com</p>
+                        <p>주소: 경기 성남시 분당구 황새울로 200번길 34-6층 604호</p>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="text-lg font-medium mb-4">소셜 미디어</h4>
+                    <div class="flex gap-4">
+                        <a href="https://www.instagram.com/moar_design_/" target="_blank" class="w-10 h-10 flex items-center justify-center bg-white/10 rounded-full hover:bg-white/20 transition-colors">
+                            <i data-lucide="instagram" class="w-5 h-5"></i>
+                        </a>
+                        <a href="https://www.youtube.com/channel/UC6TUwkMlkTCU-mACQG6NfiA" target="_blank" class="w-10 h-10 flex items-center justify-center bg-white/10 rounded-full hover:bg-white/20 transition-colors">
+                            <i data-lucide="youtube" class="w-5 h-5"></i>
+                        </a>
+                        <a href="https://map.naver.com/p/entry/place/2046266274" target="_blank" class="w-10 h-10 flex items-center justify-center bg-white/10 rounded-full hover:bg-white/20 transition-colors">
+                            <i data-lucide="map-pin" class="w-5 h-5"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-800 pt-8 text-center text-sm text-gray-400">
+                <p>&copy; 2025 MOAR DESIGN. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll to Top Button -->
+    <button id="scroll-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="scroll-to-top fixed bottom-6 right-6 w-12 h-12 bg-black text-white rounded-full shadow-lg flex items-center justify-center z-50 hover:bg-gray-800 transition-colors">
+        <i data-lucide="chevron-up" class="w-6 h-6"></i>
+    </button>
+
+    <!-- Scripts -->
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // YouTube Background Player
+        const tag = document.createElement('script');
+        tag.src = 'https://www.youtube.com/iframe_api';
+        const firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+        let player;
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('youtube-player', {
+                videoId: 'RWzq_QU_hoM',
+                playerVars: {
+                    autoplay: 1,
+                    controls: 0,
+                    showinfo: 0,
+                    modestbranding: 1,
+                    loop: 1,
+                    fs: 0,
+                    cc_load_policy: 0,
+                    iv_load_policy: 3,
+                    autohide: 1,
+                    mute: 1,
+                    start: 11,
+                    playlist: 'RWzq_QU_hoM'
+                },
+                events: {
+                    onReady: function(event) {
+                        event.target.mute();
+                        event.target.playVideo();
+                    }
+                }
+            });
+        }
+
+        // Scroll to Section
+        function scrollToSection(id) {
+            const element = document.getElementById(id);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        // Scroll Reveal Animation
+        function reveal() {
+            const reveals = document.querySelectorAll('.reveal');
+            const windowHeight = window.innerHeight;
+
+            reveals.forEach(el => {
+                const elementTop = el.getBoundingClientRect().top;
+                const elementVisible = 150;
+
+                if (elementTop < windowHeight - elementVisible) {
+                    el.classList.add('active');
+                }
+            });
+        }
+
+        // Scroll to Top Button
+        function handleScrollToTop() {
+            const scrollToTopBtn = document.getElementById('scroll-to-top');
+            if (window.scrollY > 500) {
+                scrollToTopBtn.classList.add('visible');
+            } else {
+                scrollToTopBtn.classList.remove('visible');
+            }
+        }
+
+        // Event Listeners
+        window.addEventListener('scroll', () => {
+            reveal();
+            handleScrollToTop();
+        });
+
+        // Initial reveal check
+        reveal();
+    </script>
+</body>
+</html>
