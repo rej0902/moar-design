@@ -450,7 +450,7 @@
             </div>
 
             <!-- 리뷰 그리드 -->
-            <div class="grid md:grid-cols-2 gap-8 hidden" id="reviews-grid"></div>
+            <div class="grid md:grid-cols-2 gap-8 hidden overflow-hidden" id="reviews-grid"></div>
 
             <div class="text-center mt-12 reveal">
                 <a href="https://ohou.se/experts/myhome/23827218?tab=3" target="_blank" class="inline-flex items-center gap-2 px-8 py-4 bg-black text-white font-medium rounded-full hover:bg-gray-800 transition-colors">
@@ -857,7 +857,7 @@
                 : review.description;
             
             return `
-                <div class="bg-gray-50 rounded-xl p-6 reveal">
+                <div class="bg-gray-50 rounded-xl p-6 reveal overflow-hidden">
                     ${hasImages ? `
                         <div class="flex gap-2 mb-4 overflow-x-auto pb-2">
                             ${review.images.slice(0, 4).map(img => `
@@ -875,7 +875,7 @@
                         <i data-lucide="message-circle" class="w-5 h-5 text-gray-400"></i>
                         <span class="text-sm text-gray-500">고객 후기</span>
                     </div>
-                    <p class="text-gray-700 leading-relaxed text-sm whitespace-pre-line">${description}</p>
+                    <p class="text-gray-700 leading-relaxed text-sm whitespace-pre-line break-words">${description}</p>
                 </div>
             `;
         }
