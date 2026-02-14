@@ -185,6 +185,209 @@
             0%, 50% { opacity: 1; }
             51%, 100% { opacity: 0; }
         }
+
+        /* Before & After Comparison Carousel */
+        .comparison-carousel {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .comparison-viewport {
+            overflow: hidden;
+            border-radius: 12px;
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .comparison-track {
+            display: flex;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .comparison-slide {
+            min-width: 100%;
+            position: relative;
+            aspect-ratio: 1 / 1;
+            overflow: hidden;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        .comparison-after {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .comparison-before-wrapper {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 50%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .comparison-before {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            max-width: none;
+            object-fit: cover;
+        }
+
+        .comparison-handle {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            pointer-events: none;
+            opacity: 1;
+            transition: opacity 0.3s ease;
+        }
+
+        .comparison-handle-line {
+            flex: 1;
+            width: 3px;
+            background: #c9a962;
+            box-shadow: 0 0 8px rgba(201, 169, 98, 0.5);
+        }
+
+        .comparison-handle-circle {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: #c9a962;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 12px rgba(201, 169, 98, 0.5);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            flex-shrink: 0;
+        }
+
+        .comparison-handle-circle svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .comparison-label {
+            position: absolute;
+            bottom: 16px;
+            padding: 6px 16px;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(8px);
+            color: white;
+            font-size: 13px;
+            font-weight: 500;
+            letter-spacing: 1px;
+            border-radius: 20px;
+            z-index: 5;
+            pointer-events: none;
+            opacity: 0.9;
+        }
+
+        .comparison-label-before {
+            left: 16px;
+        }
+
+        .comparison-label-after {
+            right: 16px;
+        }
+
+        /* Carousel Dots */
+        .comparison-dots {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .comparison-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #d1d5db;
+            border: none;
+            padding: 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .comparison-dot.active {
+            background: #c9a962;
+            transform: scale(1.3);
+        }
+
+        /* Interaction hint */
+        .comparison-hint {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 10px 20px;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(8px);
+            color: white;
+            font-size: 14px;
+            border-radius: 24px;
+            z-index: 15;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .comparison-slide.interactive .comparison-hint {
+            opacity: 0;
+        }
+
+        .comparison-slide:not(.interactive) .comparison-hint {
+            opacity: 0;
+        }
+
+        /* Cursor change when interactive */
+        .comparison-slide.interactive {
+            cursor: ew-resize;
+        }
+
+        @media (max-width: 768px) {
+            .comparison-carousel {
+                max-width: 100%;
+            }
+
+            .comparison-handle-circle {
+                width: 40px;
+                height: 40px;
+            }
+
+            .comparison-handle-circle svg {
+                width: 14px;
+                height: 14px;
+            }
+
+            .comparison-label {
+                font-size: 11px;
+                padding: 4px 12px;
+                bottom: 12px;
+            }
+
+            .comparison-label-before {
+                left: 12px;
+            }
+
+            .comparison-label-after {
+                right: 12px;
+            }
+        }
     </style>
 </head>
 <body class="font-sans antialiased bg-white text-gray-900 overflow-x-hidden">
@@ -369,6 +572,85 @@
 
                 <div class="bg-white rounded-lg overflow-hidden shadow-2xl img-hover">
                     <img src="image/3d투시도.jpg" alt="3D Visualization" class="w-full h-full object-cover">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Before & After Comparison Section -->
+    <section id="comparison" class="py-24 px-4 bg-white">
+        <div class="container mx-auto max-w-6xl">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-4xl md:text-5xl lg:text-6xl mb-6">
+                    DESIGN to REALITY
+                </h2>
+                <p class="text-xl md:text-2xl text-gray-600">
+                    3D 디자인 도면이 실제로 어떻게 시공되었는지 비교해 보세요
+                </p>
+            </div>
+
+            <div class="comparison-carousel reveal" id="comparisonCarousel">
+                <div class="comparison-viewport">
+                    <div class="comparison-track" id="comparisonTrack">
+                        <!-- Slide 1: 주방 -->
+                        <div class="comparison-slide" data-comparison>
+                            <img src="image/모델링_결과.jpeg" alt="주방 시공 결과" class="comparison-after" draggable="false">
+                            <div class="comparison-before-wrapper">
+                                <img src="image/모델.jpeg" alt="주방 3D 모델링" class="comparison-before" draggable="false">
+                            </div>
+                            <div class="comparison-handle">
+                                <div class="comparison-handle-line"></div>
+                                <div class="comparison-handle-circle">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </div>
+                                <div class="comparison-handle-line"></div>
+                            </div>
+                            <div class="comparison-label comparison-label-before">3D 모델링</div>
+                            <div class="comparison-label comparison-label-after">시공 결과</div>
+                        </div>
+
+                        <!-- Slide 2: 거실+주방 -->
+                        <div class="comparison-slide" data-comparison>
+                            <img src="image/모델링2_결과.jpeg" alt="거실+주방 시공 결과" class="comparison-after" draggable="false">
+                            <div class="comparison-before-wrapper">
+                                <img src="image/모델링2.jpeg" alt="거실+주방 3D 모델링" class="comparison-before" draggable="false">
+                            </div>
+                            <div class="comparison-handle">
+                                <div class="comparison-handle-line"></div>
+                                <div class="comparison-handle-circle">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </div>
+                                <div class="comparison-handle-line"></div>
+                            </div>
+                            <div class="comparison-label comparison-label-before">3D 모델링</div>
+                            <div class="comparison-label comparison-label-after">시공 결과</div>
+                        </div>
+
+                        <!-- Slide 3: 수납장 -->
+                        <div class="comparison-slide" data-comparison>
+                            <img src="image/모델링3_결과.jpeg" alt="수납장 시공 결과" class="comparison-after" draggable="false">
+                            <div class="comparison-before-wrapper">
+                                <img src="image/모델링3.jpeg" alt="수납장 3D 모델링" class="comparison-before" draggable="false">
+                            </div>
+                            <div class="comparison-handle">
+                                <div class="comparison-handle-line"></div>
+                                <div class="comparison-handle-circle">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </div>
+                                <div class="comparison-handle-line"></div>
+                            </div>
+                            <div class="comparison-label comparison-label-before">3D 모델링</div>
+                            <div class="comparison-label comparison-label-after">시공 결과</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="comparison-dots" id="comparisonDots">
+                    <button class="comparison-dot active" data-index="0"></button>
+                    <button class="comparison-dot" data-index="1"></button>
+                    <button class="comparison-dot" data-index="2"></button>
                 </div>
             </div>
         </div>
@@ -753,6 +1035,266 @@
 
         // Initial reveal check
         reveal();
+
+        // ============================================
+        // Before & After Comparison Carousel
+        // ============================================
+        function initComparisonCarousel() {
+            const track = document.getElementById('comparisonTrack');
+            const dots = document.querySelectorAll('.comparison-dot');
+            const slides = document.querySelectorAll('.comparison-slide');
+            const slideCount = slides.length; // 3
+            let currentIndex = 0;
+            let autoTimer = null;
+            let isUserInteracting = false;
+
+            // --- Infinite loop: clone first and last slides ---
+            const firstClone = slides[0].cloneNode(true);
+            const lastClone = slides[slideCount - 1].cloneNode(true);
+            firstClone.setAttribute('data-clone', 'first');
+            lastClone.setAttribute('data-clone', 'last');
+            track.appendChild(firstClone);
+            track.insertBefore(lastClone, track.firstChild);
+
+            // All slides including clones
+            const allSlides = track.querySelectorAll('.comparison-slide');
+            // Start at index 1 (because index 0 is the last-clone)
+            let trackIndex = 1;
+            track.style.transition = 'none';
+            track.style.transform = 'translateX(-' + (trackIndex * 100) + '%)';
+
+            function goToTrackIndex(idx, animate) {
+                if (animate) {
+                    track.style.transition = 'transform 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
+                } else {
+                    track.style.transition = 'none';
+                }
+                trackIndex = idx;
+                track.style.transform = 'translateX(-' + (trackIndex * 100) + '%)';
+            }
+
+            function updateDots() {
+                dots.forEach((d, i) => d.classList.toggle('active', i === currentIndex));
+            }
+
+            // Handle seamless loop jump after transition
+            track.addEventListener('transitionend', () => {
+                // Jumped past last real slide → snap to first real
+                if (trackIndex === slideCount + 1) {
+                    currentIndex = 0;
+                    goToTrackIndex(1, false);
+                }
+                // Jumped before first real slide → snap to last real
+                if (trackIndex === 0) {
+                    currentIndex = slideCount - 1;
+                    goToTrackIndex(slideCount, false);
+                }
+                updateDots();
+            });
+
+            function goToSlide(index) {
+                currentIndex = index;
+                goToTrackIndex(index + 1, true);
+                updateDots();
+            }
+
+            function nextSlide() {
+                currentIndex++;
+                if (currentIndex > slideCount - 1) currentIndex = 0;
+                goToTrackIndex(trackIndex + 1, true);
+                updateDots();
+            }
+
+            // Dot navigation
+            dots.forEach(dot => {
+                dot.addEventListener('click', () => {
+                    const idx = parseInt(dot.dataset.index);
+                    stopAutoAnimation();
+                    goToSlide(idx);
+                    startAutoAnimationForSlide(idx);
+                });
+            });
+
+            // --- Sync before image widths ---
+            function syncAllImageWidths() {
+                allSlides.forEach(slide => {
+                    const beforeImg = slide.querySelector('.comparison-before');
+                    if (beforeImg) {
+                        beforeImg.style.width = slide.offsetWidth + 'px';
+                    }
+                });
+            }
+            syncAllImageWidths();
+            window.addEventListener('resize', syncAllImageWidths);
+            allSlides.forEach(slide => {
+                const imgs = slide.querySelectorAll('img');
+                imgs.forEach(img => img.addEventListener('load', syncAllImageWidths));
+            });
+
+            // --- Before/After slider per slide ---
+            function updateSliderPosition(slide, percent) {
+                const wrapper = slide.querySelector('.comparison-before-wrapper');
+                const handle = slide.querySelector('.comparison-handle');
+                wrapper.style.width = percent + '%';
+                handle.style.left = percent + '%';
+            }
+
+            function getPercent(slide, clientX) {
+                const rect = slide.getBoundingClientRect();
+                let x = Math.max(0, Math.min(clientX - rect.left, rect.width));
+                return (x / rect.width) * 100;
+            }
+
+            // --- User drag interaction ---
+            let dragSlide = null;
+
+            function onPointerDown(slide, clientX) {
+                isUserInteracting = true;
+                dragSlide = slide;
+                slide.classList.add('interactive');
+                stopAutoAnimation();
+                updateSliderPosition(slide, getPercent(slide, clientX));
+            }
+
+            function onPointerMove(clientX) {
+                if (!dragSlide) return;
+                updateSliderPosition(dragSlide, getPercent(dragSlide, clientX));
+            }
+
+            function onPointerUp() {
+                if (!dragSlide) return;
+                const slide = dragSlide;
+                dragSlide = null;
+                // After user releases, wait a moment then resume auto
+                setTimeout(() => {
+                    slide.classList.remove('interactive');
+                    isUserInteracting = false;
+                    resetSliderAndResume(currentIndex);
+                }, 1500);
+            }
+
+            allSlides.forEach(slide => {
+                slide.addEventListener('mousedown', (e) => {
+                    e.preventDefault();
+                    onPointerDown(slide, e.clientX);
+                });
+                slide.addEventListener('touchstart', (e) => {
+                    onPointerDown(slide, e.touches[0].clientX);
+                }, { passive: true });
+            });
+
+            document.addEventListener('mousemove', (e) => {
+                if (dragSlide) { e.preventDefault(); onPointerMove(e.clientX); }
+            });
+            document.addEventListener('touchmove', (e) => {
+                if (dragSlide) onPointerMove(e.touches[0].clientX);
+            }, { passive: true });
+            document.addEventListener('mouseup', onPointerUp);
+            document.addEventListener('touchend', onPointerUp);
+
+            // --- Auto animation: 2 round-trips then next slide ---
+            // Animates the bar: 50% → 15% → 85% → 15% → 85% → 50% (2 full sweeps)
+            function animateBar(slide, onDone) {
+                const wrapper = slide.querySelector('.comparison-before-wrapper');
+                const handle = slide.querySelector('.comparison-handle');
+                // Keyframes: position, duration-to-reach-it
+                const keyframes = [
+                    { to: 15, dur: 2100 },
+                    { to: 85, dur: 3000 },
+                    { to: 50, dur: 2100 },
+                ];
+                let current = 50;
+                let step = 0;
+                let startTime = null;
+                let startVal = current;
+                let cancelled = false;
+
+                function tick(ts) {
+                    if (cancelled || isUserInteracting) return;
+                    if (!startTime) startTime = ts;
+                    const elapsed = ts - startTime;
+                    const { to, dur } = keyframes[step];
+                    const progress = Math.min(elapsed / dur, 1);
+                    // Ease in-out
+                    const ease = progress < 0.5
+                        ? 2 * progress * progress
+                        : 1 - Math.pow(-2 * progress + 2, 2) / 2;
+                    current = startVal + (to - startVal) * ease;
+                    wrapper.style.width = current + '%';
+                    handle.style.left = current + '%';
+
+                    if (progress < 1) {
+                        requestAnimationFrame(tick);
+                    } else {
+                        step++;
+                        if (step < keyframes.length) {
+                            startVal = current;
+                            startTime = null;
+                            requestAnimationFrame(tick);
+                        } else {
+                            if (onDone) onDone();
+                        }
+                    }
+                }
+
+                requestAnimationFrame(tick);
+                return () => { cancelled = true; };
+            }
+
+            let cancelCurrentAnim = null;
+
+            function stopAutoAnimation() {
+                if (cancelCurrentAnim) { cancelCurrentAnim(); cancelCurrentAnim = null; }
+                if (autoTimer) { clearTimeout(autoTimer); autoTimer = null; }
+            }
+
+            function resetSliderAndResume(slideIndex) {
+                // Reset current slide bar to 50%
+                const realSlides = Array.from(allSlides);
+                const slide = realSlides[slideIndex + 1]; // +1 because of prepended clone
+                updateSliderPosition(slide, 50);
+                // Also reset clones if applicable
+                if (slideIndex === 0) {
+                    updateSliderPosition(realSlides[realSlides.length - 1], 50); // first clone at end
+                }
+                if (slideIndex === slideCount - 1) {
+                    updateSliderPosition(realSlides[0], 50); // last clone at start
+                }
+                startAutoAnimationForSlide(slideIndex);
+            }
+
+            function startAutoAnimationForSlide(slideIndex) {
+                stopAutoAnimation();
+                if (isUserInteracting) return;
+
+                const realSlides = Array.from(allSlides);
+                const slide = realSlides[slideIndex + 1];
+
+                // Small delay before starting the sweep
+                autoTimer = setTimeout(() => {
+                    if (isUserInteracting) return;
+                    cancelCurrentAnim = animateBar(slide, () => {
+                        cancelCurrentAnim = null;
+                        if (isUserInteracting) return;
+                        // Pause briefly then go to next slide
+                        autoTimer = setTimeout(() => {
+                            if (isUserInteracting) return;
+                            nextSlide();
+                            // After transition, start animation on the new slide
+                            autoTimer = setTimeout(() => {
+                                if (isUserInteracting) return;
+                                startAutoAnimationForSlide(currentIndex);
+                            }, 700);
+                        }, 800);
+                    });
+                }, 500);
+            }
+
+            // --- Start ---
+            startAutoAnimationForSlide(0);
+        }
+
+        initComparisonCarousel();
 
         // ============================================
         // 오늘의집 데이터 로딩 (로컬 JSON 파일)
